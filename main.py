@@ -10,13 +10,14 @@ class charclass(object):
         self.width = 32
         self.height = 32
         self.frames = 2
-        self.velocity = 10
+        self.velocity = 8
         self.blitmap = pygame.Rect(0, 0, 32, 32)
         self.pos = pygame.math.Vector2(x,y)
         self.sprite = pygame.image.load("roy.png").convert()
         self.sprite.set_colorkey((255,0,255))
         self.currframe = 0
         self.currframe2 = 0
+        self.currTile = int(Tile2.collisionmap[int(self.pos[1] / 32)][int(self.pos[0] / 32)])
 #_______________________________________________________________________________RENDER
     def drawGW(self, screen):
         screen.blit(self.sprite, self.pos, self.blitmap)
@@ -25,16 +26,18 @@ class charclass(object):
         keys = pygame.key.get_pressed()
         vec = pygame.math.Vector2(0,0)
 
+#_______________________________________________________________________________
+#_______________________________________________________________________________LEFT  LEFT  LEFT  LEFT  LEFT  LEFT  LEFT
+
         if keys[pygame.K_a] and self.pos.x > 0 and not keys[pygame.K_d]:
             vec += pygame.math.Vector2(-1,0)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(0, 0, 32, 32)
-                self.currframe += 0.3
             else:
                 self.blitmap = pygame.Rect(32, 0, 32, 32)
-                self.currframe += 0.3
 
         if keys[pygame.K_d] and self.pos.x < (screen.get_width() - self.width) and not keys[pygame.K_a]:
+
             vec += pygame.math.Vector2(1,0)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(64, 0, 32, 32)
@@ -42,6 +45,7 @@ class charclass(object):
                 self.blitmap = pygame.Rect(0, 32, 32, 32)
 
         if keys[pygame.K_w] and self.pos.y > 0 and not keys[pygame.K_s]:
+
             vec += pygame.math.Vector2(0,-1)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(32, 32, 32, 32)
@@ -49,6 +53,7 @@ class charclass(object):
                 self.blitmap = pygame.Rect(64, 32, 32, 32)
 
         if keys[pygame.K_s] and self.pos.y < (screen.get_height() - self.height) and not keys[pygame.K_w]:
+
             vec += pygame.math.Vector2(0,1)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(0,  64, 32, 32)
@@ -58,14 +63,30 @@ class charclass(object):
         if (vec.length() != 0):
             self.vec = vec.normalize()
             self.vec.scale_to_length(self.velocity)
+
             self.pos += self.vec;
 
-            self.currframe += 0.3
-            if self.currframe >= self.frames:
-                self.currframe = 0
+            #clip the x/y
+            if int(Tile2.collisionmap[int(self.pos.y / 32)][int((self.pos.x + 16) / 32)]) == 0:
+                self.pos.y = int((self.pos.y + 32) / 32) * 32
 
-        #if int((self.pos.y) / 32)
-        #self.pos.x/32
+            if int(Tile2.collisionmap[int((self.pos.y + 31) / 32)][int((self.pos.x + 16) / 32)]) == 0:
+                self.pos.y = int((self.pos.y - 0) / 32) * 32
+
+
+            if int(Tile2.collisionmap[int((self.pos.y + 16) / 32)][int((self.pos.x) / 32)]) == 0:
+                self.pos.x = int((self.pos.x + 32) / 32) * 32
+
+            if int(Tile2.collisionmap[int((self.pos.y + 16) / 32)][int((self.pos.x + 31) / 32)]) == 0:
+                self.pos.x = int(self.pos.x / 32) * 32
+
+
+
+        self.currframe += 0.3
+        if self.currframe >= self.frames:
+            self.currframe = 0
+
+
 
         if self.pos.x < 0: self.pos.x = 0
         if self.pos.x > screen.get_width() - self.width: self.pos.x = screen.get_width() - self.width
@@ -81,10 +102,13 @@ if __name__ == '__main__':
     pygame.display.set_caption("screen title")
     #imageDirect = ".\data\\"
 
-    character1 = charclass((screen.get_width()/2), (screen.get_height()/2))
+
 
     Tile1 = TileMap("map-1.csv")
     Tile2 = TileMap("map-1-collision-mask.csv")
+
+    character1 = charclass((screen.get_width()/2), (screen.get_height()/2))
+
     #look_1 = pygame.image.load('spr_bee1_0.png').convert()
     #look_1 = pygame.transform.scale(look_1, (2120, 1600))
 
@@ -110,7 +134,12 @@ if __name__ == '__main__':
         character1.drawGW(screen)
 
 
+
+        #print(character1.pos)
+        #print(int(character1.pos[0] / 32)) #+ 485.431 % 32)
+        #print(Tile2.collisionmap[int(character1.pos[1] / 32)][int(character1.pos[0] / 32)])
         #print(Tile2.collisionRects)
+
         screen.blit(test, [300,150])
 
         pygame.display.flip()
