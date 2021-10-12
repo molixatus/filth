@@ -10,7 +10,7 @@ class charclass(object):
         self.width = 32
         self.height = 32
         self.frames = 2
-        self.velocity = 5
+        self.velocity = 8
         self.blitmap = pygame.Rect(0, 0, 32, 32)
         self.pos = pygame.math.Vector2(x,y)
         self.sprite = pygame.image.load("roy.png").convert()
