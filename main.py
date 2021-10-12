@@ -102,6 +102,7 @@ if __name__ == '__main__':
         character1.controlInput(screen)
 
         #screen.fill((62,35,44))
+        #screen.fill((237,246,214))
         Tile1.load_tiles(screen)
         Tile2.load_tiles_coll(screen)
 
