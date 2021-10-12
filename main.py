@@ -10,7 +10,7 @@ class charclass(object):
         self.width = 32
         self.height = 32
         self.frames = 2
-        self.velocity = 8
+        self.velocity = 5
         self.blitmap = pygame.Rect(0, 0, 32, 32)
         self.pos = pygame.math.Vector2(x,y)
         self.sprite = pygame.image.load("roy.png").convert()
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     Tile1 = TileMap("map-1.csv")
     Tile2 = TileMap("map-1-collision-mask.csv")
 
-    character1 = charclass((screen.get_width()/2), (screen.get_height()/2))
+    character1 = charclass((screen.get_width()/2-64), (screen.get_height()/2))
 
     #look_1 = pygame.image.load('spr_bee1_0.png').convert()
     #look_1 = pygame.transform.scale(look_1, (2120, 1600))
