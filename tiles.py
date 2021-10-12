@@ -12,6 +12,7 @@ class TileMap():
         self.tileset = pygame.image.load("tileset_1bit.png").convert()
         self.map = self.read_csv(filename)
         self.collisionmap = self.read_csv(filename)
+        self.collisionRects = []
 
     def read_csv(self, filename):
         map = []
@@ -35,8 +36,8 @@ class TileMap():
 
     def load_tiles_coll(self, surface):
         x, y = 0, 0
-        for row in self.collisionmap:
 
+        for row in self.collisionmap:
             x = 0
             for tile in row:
                 tr = int(int(tile)/2)
@@ -44,8 +45,7 @@ class TileMap():
                 rect1 = pygame.Rect((tc * 32), (tr * 32), 32, 32)
                 surface.blit(self.tilesetcollision, (x, y), rect1)
 
-                collisionRects = []
-                collisionRects.append(pygame.Rect(x, y, 32, 32)
+                self.collisionRects.append(pygame.Rect(x, y, 32, 32))
 
                 x += 32
             y += 32

@@ -110,6 +110,7 @@ if __name__ == '__main__':
         character1.drawGW(screen)
 
 
+        #print(Tile2.collisionRects)
         screen.blit(test, [300,150])
 
         pygame.display.flip()
