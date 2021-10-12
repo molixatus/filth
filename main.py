@@ -128,7 +128,7 @@ if __name__ == '__main__':
         #screen.fill((62,35,44))
         #screen.fill((237,246,214))
         Tile1.load_tiles(screen)
-        Tile2.load_tiles_coll(screen)
+        #Tile2.load_tiles_coll(screen)
 
         #screen.blit(look_1, (screen.get_width()/2 - look_1.get_width()/2, screen.get_height()/2 - look_1.get_height()/2))
         character1.drawGW(screen)
