@@ -13,7 +13,7 @@ class charclass(object):
         self.velocity = 10
         self.blitmap = pygame.Rect(0, 0, 32, 32)
         self.pos = pygame.math.Vector2(x,y)
-        self.sprite = pygame.image.load(imageDirect + "roy.png").convert()
+        self.sprite = pygame.image.load("roy.png").convert()
         self.sprite.set_colorkey((255,0,255))
         self.currframe = 0
         self.currframe2 = 0
@@ -25,7 +25,7 @@ class charclass(object):
         keys = pygame.key.get_pressed()
         vec = pygame.math.Vector2(0,0)
 
-        if keys[pygame.K_a] and self.pos.x > 0 and not keys[pygame.K_d] or keys[pygame.K_LEFT] and self.pos.x > 0 and not keys[pygame.K_RIGHT]:
+        if keys[pygame.K_a] and self.pos.x > 0 and not keys[pygame.K_d]:
             vec += pygame.math.Vector2(-1,0)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(0, 0, 32, 32)
@@ -34,21 +34,21 @@ class charclass(object):
                 self.blitmap = pygame.Rect(32, 0, 32, 32)
                 self.currframe += 0.3
 
-        if keys[pygame.K_d] and self.pos.x < (screen.get_width() - self.width) and not keys[pygame.K_a] or keys[pygame.K_RIGHT] and self.pos.x < (screen.get_width() - self.width) and not keys[pygame.K_LEFT]:
+        if keys[pygame.K_d] and self.pos.x < (screen.get_width() - self.width) and not keys[pygame.K_a]:
             vec += pygame.math.Vector2(1,0)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(64, 0, 32, 32)
             else:
                 self.blitmap = pygame.Rect(0, 32, 32, 32)
 
-        if keys[pygame.K_w] and self.pos.y > 0 and not keys[pygame.K_s] or keys[pygame.K_UP] and self.pos.y > 0 and not keys[pygame.K_DOWN]:
+        if keys[pygame.K_w] and self.pos.y > 0 and not keys[pygame.K_s]:
             vec += pygame.math.Vector2(0,-1)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(32, 32, 32, 32)
             else:
                 self.blitmap = pygame.Rect(64, 32, 32, 32)
 
-        if keys[pygame.K_s] and self.pos.y < (screen.get_height() - self.height) and not keys[pygame.K_w] or keys[pygame.K_DOWN] and self.pos.y < (screen.get_height() - self.height) and not keys[pygame.K_UP]:
+        if keys[pygame.K_s] and self.pos.y < (screen.get_height() - self.height) and not keys[pygame.K_w]:
             vec += pygame.math.Vector2(0,1)
             if self.currframe < 1:
                 self.blitmap = pygame.Rect(0,  64, 32, 32)
@@ -79,16 +79,16 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((1344, 768))
     #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     pygame.display.set_caption("screen title")
-    imageDirect = ".\data\\"
+    #imageDirect = ".\data\\"
 
     character1 = charclass((screen.get_width()/2), (screen.get_height()/2))
 
-    Tile1 = TileMap(imageDirect + "map-1.csv")
-    Tile2 = TileMap(imageDirect + "map-1-collision-mask.csv")
+    Tile1 = TileMap("map-1.csv")
+    Tile2 = TileMap("map-1-collision-mask.csv")
     #look_1 = pygame.image.load('spr_bee1_0.png').convert()
     #look_1 = pygame.transform.scale(look_1, (2120, 1600))
-    print(Tile2.collisionmap)
-    test = pygame.image.load(imageDirect + 'pixil-frame-0.png').convert()
+
+    test = pygame.image.load('pixil-frame-0.png').convert()
     test.set_colorkey((255,0,255))
 
     running = True

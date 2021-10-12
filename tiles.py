@@ -7,9 +7,9 @@ from pygame.locals import *
 class TileMap():
 
     def __init__(self, filename):
-        self.tilesetcollision = pygame.image.load(".\data\\tileset_1bit-collisions.png").convert()
+        self.tilesetcollision = pygame.image.load("tileset_1bit-collisions.png").convert()
         self.tilesetcollision.set_colorkey((255,0,255))
-        self.tileset = pygame.image.load(".\data\\tileset_1bit.png").convert()
+        self.tileset = pygame.image.load("tileset_1bit.png").convert()
         self.map = self.read_csv(filename)
         self.collisionmap = self.read_csv(filename)
 
@@ -43,8 +43,13 @@ class TileMap():
                 tc = int(int(tile) % 2)
                 rect1 = pygame.Rect((tc * 32), (tr * 32), 32, 32)
                 surface.blit(self.tilesetcollision, (x, y), rect1)
+
+                collisionRects = []
+                collisionRects.append(pygame.Rect(x, y, 32, 32)
+
                 x += 32
             y += 32
+
     #def currtile(self, x, y):
 
 #_______________________________________________________________________________
